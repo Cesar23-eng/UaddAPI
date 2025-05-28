@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UaddAPI.Data;
 using UaddAPI.Dto.NewsPost;
-using UaddAPI.Enums;
 using UaddAPI.Models;
 
 namespace UaddAPI.Controllers;
@@ -190,38 +189,5 @@ public class NewsPostController : ControllerBase
             .ToListAsync();
 
         return Ok(posts);
-    }
-
-    [HttpGet("byCategory/{category}")]
-    public async Task<ActionResult<IEnumerable<NewsPostDto>>> GetByCategory(CategoryType category)
-    {
-        var posts = await _context.NewsPosts
-            .Where(p => p.Category == category)
-            .Select(p => new NewsPostDto
-            {
-                Id = p.Id,
-                Title = p.Title,
-                Description = p.Description,
-                Location = p.Location,
-                Condition = p.Condition,
-                PaymentMethod = p.PaymentMethod,
-                Price = p.Price,
-                ImageUrl = p.ImageUrl,
-                PublishDate = p.PublishDate,
-                PhoneNumber = p.PhoneNumber,
-                Email = p.Email,
-                WhatsAppLink = p.WhatsAppLink,
-                Category = p.Category
-            })
-            .ToListAsync();
-
-        return Ok(posts);
-    }
-
-    [HttpGet("categories")]
-    public ActionResult<IEnumerable<string>> GetCategories()
-    {
-        var categories = Enum.GetNames(typeof(CategoryType));
-        return Ok(categories);
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using UaddAPI.Enums;
 
 namespace UaddAPI.Dto.NewsPost;
 
@@ -19,6 +18,6 @@ public class NewsPostCreateDto
 
     public string WhatsAppLink { get; set; } = null!;
     
-    public CategoryType Category { get; set; }
+    public string Category { get; set; } = null!;
 
 }

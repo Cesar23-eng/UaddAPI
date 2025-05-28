@@ -1,6 +1,4 @@
-﻿using UaddAPI.Enums;
-
-namespace UaddAPI.Dto.NewsPost;
+﻿namespace UaddAPI.Dto.NewsPost;
 
 public class NewsPostDto
 {
@@ -16,5 +14,5 @@ public class NewsPostDto
     public string PhoneNumber { get; set; } = null!;
     public string Email { get; set; } = null!;
     public string WhatsAppLink { get; set; } = null!;
-    public CategoryType Category { get; set; }
+    public string Category { get; set; }
 }

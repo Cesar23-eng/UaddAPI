@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
-using UaddAPI.Enums;
 
 namespace UaddAPI.Models;
 
@@ -27,7 +26,7 @@ public class NewsPost
     [Required]
     public double Price { get; set; }
 
-    [Required]
+    [Required]  
     public string ImageUrl { get; set; } = null!;
 
     [Required]
@@ -48,6 +47,5 @@ public class NewsPost
     [JsonIgnore]
     public User Author { get; set; } = null!;
     
-    [Required]
-    public CategoryType Category { get; set; }
+    public string Category { get; set; } = null!;
 }

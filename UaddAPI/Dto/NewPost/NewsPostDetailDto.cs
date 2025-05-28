@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using UaddAPI.Enums;
 
 namespace UaddAPI.Dto.NewsPost;
 
@@ -20,5 +19,5 @@ public class NewsPostDetailDto
     public string ImageUrl { get; set; } = null!;
     public DateTime PublishDate { get; set; }
     
-    public CategoryType Category { get; set; }
+    public string Category { get; set; }
 }
