@@ -15,4 +15,5 @@ public class NewsPostDto
     public string Email { get; set; } = null!;
     public string WhatsAppLink { get; set; } = null!;
     public string Category { get; set; }
+    
 }
