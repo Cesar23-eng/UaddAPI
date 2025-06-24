@@ -30,5 +30,8 @@ namespace UaddAPI.Dto.Match
 
         [Required]
         public string ImageUrl { get; set; } = null!;
+
+        [Required, MaxLength(150)]
+        public string ChampionshipName { get; set; } = null!;
     }
 }

@@ -17,5 +17,11 @@ namespace UaddAPI.Dto.Event
         public string ImageUrl { get; set; } = null!;
 
         public int CreatedByUserId { get; set; }
+
+        public string Carrera { get; set; } = null!;
+
+        public string FormLink { get; set; } = null!;
+
+        public string Ubicacion { get; set; } = null!;
     }
 }

@@ -24,6 +24,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("register")]
+    [AllowAnonymous] // cualquier persona puede registrarse
     public async Task<ActionResult<TokenDto>> Register(UserRegisterDto dto)
     {
         if (await _context.Users.AnyAsync(u => u.Username == dto.Username))
@@ -39,9 +40,8 @@ public class AuthController : ControllerBase
             Email = dto.Email,
             PasswordSalt = hmac.Key,
             PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(dto.Password)),
-            Role = Role.User  // por defecto
+            Role = Role.User // 👈 se asigna automáticamente como User
         };
-
 
         _context.Users.Add(user);
         await _context.SaveChangesAsync();
@@ -50,6 +50,7 @@ public class AuthController : ControllerBase
 
         return Ok(new TokenDto { Token = token });
     }
+
 
     [HttpPost("login")]
     public async Task<ActionResult<TokenDto>> Login(UserLoginDto dto)

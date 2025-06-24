@@ -13,5 +13,11 @@ namespace UaddAPI.Dto.Event
         public string Location { get; set; } = null!;
 
         public string ImageUrl { get; set; } = null!;
+
+        public string Carrera { get; set; } = null!;
+
+        public string FormLink { get; set; } = null!;
+
+        public string Ubicacion { get; set; } = null!;
     }
 }

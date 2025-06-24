@@ -72,7 +72,7 @@ public class NewsPostController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize]
+    [Authorize(Roles = "Admin,Admin_Post")]
     public async Task<ActionResult<NewsPostDto>> Create(NewsPostCreateDto dto)
     {
         if (!ModelState.IsValid)
@@ -121,7 +121,7 @@ public class NewsPostController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Admin_Post")]
     public async Task<IActionResult> Update(int id, NewsPostCreateDto dto)
     {
         if (!ModelState.IsValid)
@@ -147,14 +147,15 @@ public class NewsPostController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    [Authorize]
+    [Authorize(Roles = "Admin,Admin_Post")]
     public async Task<IActionResult> Delete(int id)
     {
         var post = await _context.NewsPosts.FirstOrDefaultAsync(p => p.Id == id);
         if (post == null) return NotFound();
 
         var userId = int.Parse(User.Identity!.Name!);
-        if (post.AuthorId != userId) return Forbid();
+        if (post.AuthorId != userId && !User.IsInRole("Admin"))
+            return Forbid();
 
         _context.NewsPosts.Remove(post);
         await _context.SaveChangesAsync();
@@ -163,7 +164,7 @@ public class NewsPostController : ControllerBase
     }
 
     [HttpGet("mine")]
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     public async Task<ActionResult<IEnumerable<NewsPostDto>>> GetMyPosts()
     {
         var userId = int.Parse(User.Identity!.Name!);

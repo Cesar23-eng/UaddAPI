@@ -38,7 +38,7 @@ namespace UaddAPI.Models
         [Required]
         public DateTime PublishDate { get; set; }
 
-        [Required]
-        public int CreatedByUserId { get; set; }
+        [Required, MaxLength(150)]
+        public string ChampionshipName { get; set; } = null!;
     }
 }

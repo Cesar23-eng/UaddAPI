@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UaddAPI.Data;
 using UaddAPI.Dto.Match;
-using UaddAPI.Dto.NewPost;
 using UaddAPI.Models;
 
 namespace UaddAPI.Controllers
@@ -32,7 +31,8 @@ namespace UaddAPI.Controllers
                     MatchDate = m.MatchDate,
                     Location = m.Location,
                     SportType = m.SportType,
-                    ImageUrl = m.ImageUrl
+                    ImageUrl = m.ImageUrl,
+                    ChampionshipName = m.ChampionshipName
                 })
                 .ToListAsync();
 
@@ -57,14 +57,14 @@ namespace UaddAPI.Controllers
                 Location = match.Location,
                 SportType = match.SportType,
                 ImageUrl = match.ImageUrl,
-                CreatedByUserId = match.CreatedByUserId
+                ChampionshipName = match.ChampionshipName
             };
 
             return Ok(dto);
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Admin_Matchs")]
         public async Task<ActionResult<MatchDto>> Create(MatchCreateDto dto)
         {
             var userId = int.Parse(User.Identity!.Name!);
@@ -80,7 +80,8 @@ namespace UaddAPI.Controllers
                 Location = dto.Location,
                 SportType = dto.SportType,
                 ImageUrl = dto.ImageUrl,
-                CreatedByUserId = userId
+                ChampionshipName = dto.ChampionshipName,
+                PublishDate = DateTime.UtcNow,
             };
 
             _context.Matches.Add(match);
@@ -95,14 +96,15 @@ namespace UaddAPI.Controllers
                 MatchDate = match.MatchDate,
                 Location = match.Location,
                 SportType = match.SportType,
-                ImageUrl = match.ImageUrl
+                ImageUrl = match.ImageUrl,
+                ChampionshipName = match.ChampionshipName
             };
 
             return CreatedAtAction(nameof(Get), new { id = match.Id }, result);
         }
 
         [HttpPut("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Admin_Matchs")]
         public async Task<IActionResult> Update(int id, MatchCreateDto dto)
         {
             var match = await _context.Matches.FirstOrDefaultAsync(m => m.Id == id);
@@ -117,13 +119,14 @@ namespace UaddAPI.Controllers
             match.Location = dto.Location;
             match.SportType = dto.SportType;
             match.ImageUrl = dto.ImageUrl;
+            match.ChampionshipName = dto.ChampionshipName;
 
             await _context.SaveChangesAsync();
             return NoContent();
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Admin_Matchs")]
         public async Task<IActionResult> Delete(int id)
         {
             var match = await _context.Matches.FirstOrDefaultAsync(m => m.Id == id);

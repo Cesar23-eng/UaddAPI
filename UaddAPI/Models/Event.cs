@@ -28,5 +28,16 @@ namespace UaddAPI.Models
 
         [Required]
         public int CreatedByUserId { get; set; }
+
+        // NUEVOS CAMPOS
+
+        [MaxLength(100)]
+        public string Carrera { get; set; } = null!;
+
+        [MaxLength(300)]
+        public string FormLink { get; set; } = null!;
+
+        [MaxLength(300)]
+        public string Ubicacion { get; set; } = null!;
     }
 }

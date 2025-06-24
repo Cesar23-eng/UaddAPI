@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace UaddAPI.Dto.Event
 {
@@ -18,5 +19,14 @@ namespace UaddAPI.Dto.Event
 
         [Required]
         public string ImageUrl { get; set; } = null!;
+
+        [MaxLength(100)]
+        public string Carrera { get; set; } = null!;
+
+        [MaxLength(300)]
+        public string FormLink { get; set; } = null!;
+
+        [MaxLength(300)]
+        public string Ubicacion { get; set; } = null!;
     }
 }

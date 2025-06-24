@@ -3,7 +3,17 @@ using System.Text.Json.Serialization;
 
 namespace UaddAPI.Models;
 
-public enum Role { Admin = 0, User = 1 }
+public enum Role
+{
+    Admin = 0,
+    User = 1,
+    Admin_Evento = 2,
+    Admin_Matchs = 3,
+    Admin_Post = 4,
+    Admin_Internship = 5,
+    Admin_IntensiveCourse = 6
+}
+
 
 public class User
 {

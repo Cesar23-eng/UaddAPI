@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using UaddAPI.Models;
 
 namespace UaddAPI.Dto.User;
 

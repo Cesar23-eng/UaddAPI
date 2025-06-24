@@ -28,7 +28,10 @@ namespace UaddAPI.Controllers
                     Title = e.Title,
                     Date = e.Date,
                     Location = e.Location,
-                    ImageUrl = e.ImageUrl
+                    ImageUrl = e.ImageUrl,
+                    Carrera = e.Carrera,
+                    FormLink = e.FormLink,
+                    Ubicacion = e.Ubicacion
                 })
                 .ToListAsync();
 
@@ -49,14 +52,17 @@ namespace UaddAPI.Controllers
                 Date = ev.Date,
                 Location = ev.Location,
                 ImageUrl = ev.ImageUrl,
-                CreatedByUserId = ev.CreatedByUserId
+                CreatedByUserId = ev.CreatedByUserId,
+                Carrera = ev.Carrera,
+                FormLink = ev.FormLink,
+                Ubicacion = ev.Ubicacion
             };
 
             return Ok(dto);
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Admin_Evento")]
         public async Task<ActionResult<EventDto>> Create(EventCreateDto dto)
         {
             var userId = int.Parse(User.Identity!.Name!);
@@ -68,7 +74,11 @@ namespace UaddAPI.Controllers
                 Date = dto.Date,
                 Location = dto.Location,
                 ImageUrl = dto.ImageUrl,
-                CreatedByUserId = userId
+                Carrera = dto.Carrera,
+                FormLink = dto.FormLink,
+                Ubicacion = dto.Ubicacion,
+                CreatedByUserId = userId,
+                PublishDate = DateTime.UtcNow
             };
 
             _context.Events.Add(ev);
@@ -80,14 +90,17 @@ namespace UaddAPI.Controllers
                 Title = ev.Title,
                 Date = ev.Date,
                 Location = ev.Location,
-                ImageUrl = ev.ImageUrl
+                ImageUrl = ev.ImageUrl,
+                Carrera = ev.Carrera,
+                FormLink = ev.FormLink,
+                Ubicacion = ev.Ubicacion
             };
 
             return CreatedAtAction(nameof(Get), new { id = ev.Id }, result);
         }
 
         [HttpPut("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Admin_Evento")]
         public async Task<IActionResult> Update(int id, EventCreateDto dto)
         {
             var ev = await _context.Events.FirstOrDefaultAsync(e => e.Id == id);
@@ -98,13 +111,16 @@ namespace UaddAPI.Controllers
             ev.Date = dto.Date;
             ev.Location = dto.Location;
             ev.ImageUrl = dto.ImageUrl;
+            ev.Carrera = dto.Carrera;
+            ev.FormLink = dto.FormLink;
+            ev.Ubicacion = dto.Ubicacion;
 
             await _context.SaveChangesAsync();
             return NoContent();
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Admin_Evento")]
         public async Task<IActionResult> Delete(int id)
         {
             var ev = await _context.Events.FirstOrDefaultAsync(e => e.Id == id);

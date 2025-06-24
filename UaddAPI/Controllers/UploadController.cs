@@ -8,7 +8,7 @@ namespace UaddAPI.Controllers;
 public class UploadController : ControllerBase
 {
     [HttpPost]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Admin_Evento,Admin_Post,Admin_Matchs,Admin_Internship,Admin_IntensiveCourse")]
     public async Task<IActionResult> UploadImage(IFormFile file)
     {
         if (file == null || file.Length == 0)
